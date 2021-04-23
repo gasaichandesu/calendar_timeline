@@ -20,7 +20,7 @@ class CalendarTimeline extends StatefulWidget {
   final DateTime firstDate;
   final DateTime lastDate;
   final SelectableDayPredicate? selectableDayPredicate;
-  final DayWithEventsPredicate? dayWithEventsPredicate;
+  final SelectableDayPredicate? dayWithEventsPredicate;
 
   final OnDateSelected onDateSelected;
   final double leftMargin;
