@@ -169,7 +169,6 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
                 activeDayColor: widget.activeDayColor,
                 activeDayBackgroundColor: widget.activeBackgroundDayColor,
                 dotsColor: widget.dotsColor,
-                dayNameColor: widget.dayNameColor,
               ),
               if (index == _days.length - 1)
                 SizedBox(
