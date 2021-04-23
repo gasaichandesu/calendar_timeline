@@ -1,6 +1,12 @@
 ![header.jpg](header.jpg)
 
-**Flutter widget form select a date in horizontal timeline with customizable styles.**
+## Important
+
+This is a fork of original widget made specifically for my needs. What's changed:
+
+- Removed useless dots at the top of DayItem
+- Added a dot at the bottom of DayItem, which could indicate presence of any event on that date. It is controlled using dayWithEventsPredicate and dotsColor
+- **Flutter widget form select a date in horizontal timeline with customizable styles.**
 
 ## Getting Started
 
@@ -11,11 +17,12 @@ You can use this package when you need to add a date picker that takes up little
 ## Properties
 
 | Property                 | Type                   | Description                                                 |
-|:-------------------------|:-----------------------|:------------------------------------------------------------|
+| :----------------------- | :--------------------- | :---------------------------------------------------------- |
 | initialDate              | DateTime               | Initial date selected                                       |
 | firstDate                | DateTime               | First date available in calendar                            |
 | lastDate                 | DateTime               | Last date available in calendar                             |
 | selectableDayPredicate   | SelectableDayPredicate | Signature for predicating dates for enabled date selections |
+| dayWithEventsPredicate   | DayWithEventsPredicate | Controls if the bottom dot is present                       |
 | onDateSelected           | OnDateSelected         | Callback to notify that a date has been selected            |
 | leftMargin               | double                 | Left margin to month and day list                           |
 | monthColor               | Color                  | Color for month list elements                               |
@@ -24,8 +31,7 @@ You can use this package when you need to add a date picker that takes up little
 | activeBackgroundDayColor | Color                  | Color for selected day background                           |
 | dotColor                 | Color                  | Color for top dots in select day                            |
 | locale                   | String                 | Locale string to get formatted date                         |
-| showYears                | bool                   | Indicates if it show year selector                           |
-
+| showYears                | bool                   | Indicates if it show year selector                          |
 
 ## Use example
 

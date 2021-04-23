@@ -59,13 +59,17 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(16),
               child: Text(
                 'Calendar Timeline',
-                style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.tealAccent[100]),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6
+                    .copyWith(color: Colors.tealAccent[100]),
               ),
             ),
             CalendarTimeline(
               showYears: false,
+              dayWithEventsPredicate: (date) => DateTime.now().isBefore(date),
               initialDate: _selectedDate,
-              firstDate: DateTime.now(),
+              firstDate: DateTime.now().subtract(Duration(days: 10)),
               lastDate: DateTime.now().add(Duration(days: 365)),
               onDateSelected: (date) {
                 setState(() {
@@ -86,13 +90,18 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.only(left: 16),
               child: TextButton(
-                style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.teal[200])),
-                child: Text('RESET', style: TextStyle(color: Color(0xFF333A47))),
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.teal[200])),
+                child:
+                    Text('RESET', style: TextStyle(color: Color(0xFF333A47))),
                 onPressed: () => setState(() => _resetSelectedDate()),
               ),
             ),
             SizedBox(height: 20),
-            Center(child: Text('Selected date is $_selectedDate', style: TextStyle(color: Colors.white)))
+            Center(
+                child: Text('Selected date is $_selectedDate',
+                    style: TextStyle(color: Colors.white)))
           ],
         ),
       ),

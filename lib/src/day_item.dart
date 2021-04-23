@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 class DayItem extends StatelessWidget {
   final int dayNumber;
   final String shortName;
+  final bool isDimmed;
   final bool isSelected;
+  final bool hasEvents;
   final Function onTap;
   final Color? dayColor;
   final Color? activeDayColor;
@@ -18,9 +20,11 @@ class DayItem extends StatelessWidget {
     required this.dayNumber,
     required this.shortName,
     required this.onTap,
+    this.isDimmed = false,
     this.isSelected = false,
     this.dayColor,
     this.activeDayColor,
+    this.hasEvents = false,
     this.activeDayBackgroundColor,
     this.available = true,
     this.dotsColor,
@@ -34,12 +38,12 @@ class DayItem extends StatelessWidget {
   ///? Now if the user click close to the number but not straight on top it will still select the date. (ONLY INFORMATION - ERASE)
   _buildDay(BuildContext context) {
     final textStyle = TextStyle(
-      color: available
-        ? dayColor ?? Theme.of(context).accentColor
-        : dayColor?.withOpacity(0.5) ??
-        Theme.of(context).accentColor.withOpacity(0.5),
-      fontSize: 32,
-      fontWeight: FontWeight.normal);
+        color: available && !isDimmed
+            ? dayColor ?? Theme.of(context).accentColor
+            : dayColor?.withOpacity(0.5) ??
+                Theme.of(context).accentColor.withOpacity(0.5),
+        fontSize: 32,
+        fontWeight: FontWeight.normal);
     final selectedStyle = TextStyle(
       color: activeDayColor ?? Colors.white,
       fontSize: 32,
@@ -51,22 +55,17 @@ class DayItem extends StatelessWidget {
       onTap: available ? onTap as void Function()? : null,
       child: Container(
         decoration: isSelected
-          ? BoxDecoration(
-          color:
-          activeDayBackgroundColor ?? Theme.of(context).accentColor,
-          borderRadius: BorderRadius.circular(12.0),
-        )
-          : BoxDecoration(color: Colors.transparent),
+            ? BoxDecoration(
+                color:
+                    activeDayBackgroundColor ?? Theme.of(context).accentColor,
+                borderRadius: BorderRadius.circular(12.0),
+              )
+            : BoxDecoration(color: Colors.transparent),
         height: height,
         width: width,
         child: Column(
           children: <Widget>[
-            if (isSelected) ...[
-              SizedBox(height: 7),
-              _buildDots(),
-              SizedBox(height: 12),
-            ] else
-              SizedBox(height: 14),
+            if (isSelected) SizedBox(height: 14.0) else SizedBox(height: 7.0),
             Text(
               dayNumber.toString(),
               style: isSelected ? selectedStyle : textStyle,
@@ -80,6 +79,8 @@ class DayItem extends StatelessWidget {
                   fontSize: 14,
                 ),
               ),
+            SizedBox(height: 4.0),
+            if (hasEvents && !isDimmed) _buildDots(),
           ],
         ),
       ),
@@ -98,7 +99,7 @@ class DayItem extends StatelessWidget {
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [dot, dot],
+      children: [dot],
     );
   }
 
