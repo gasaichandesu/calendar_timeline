@@ -70,24 +70,23 @@ class DayItem extends StatelessWidget {
               dayNumber.toString(),
               style: isSelected ? selectedStyle : textStyle,
             ),
-            if (isSelected)
-              Text(
-                shortName,
-                style: TextStyle(
-                  color: dayNameColor ?? activeDayColor ?? Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                ),
+            Text(
+              shortName,
+              style: TextStyle(
+                color: dayNameColor ?? activeDayColor ?? Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
               ),
+            ),
             SizedBox(height: 4.0),
-            if (hasEvents && !isDimmed) _buildDots(),
+            if (hasEvents && !isDimmed) _buildDot(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildDots() {
+  Widget _buildDot() {
     final dot = Container(
       height: 5,
       width: 5,

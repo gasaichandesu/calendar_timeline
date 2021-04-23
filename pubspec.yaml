@@ -2,10 +2,10 @@ name: calendar_timeline
 description: A horizontal date picker that takes up little screen space, so we
   can always have it visible, and that facilitates use with one hand.
 version: 1.0.0-null-safety.0
-homepage: https://github.com/ikicodedev/calendar_timeline
+homepage: https://github.com/gasaichandesu/calendar_timeline
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
