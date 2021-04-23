@@ -73,7 +73,11 @@ class DayItem extends StatelessWidget {
             Text(
               shortName,
               style: TextStyle(
-                color: dayNameColor ?? activeDayColor ?? Colors.white,
+                color: isDimmed
+                    ? (dayNameColor == null
+                        ? Colors.white
+                        : dayNameColor!.withOpacity(0.5))
+                    : dayNameColor,
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
               ),
