@@ -6,6 +6,7 @@ This is a fork of original widget made specifically for my needs. What's changed
 
 - Removed useless dots at the top of DayItem
 - Added a dot at the bottom of DayItem, which could indicate presence of any event on that date. It is controlled using dayWithEventsPredicate and dotsColor
+- Added scale argument to make widget smaller or larger in certain scenarios
 
 **Flutter widget form select a date in horizontal timeline with customizable styles.**
 

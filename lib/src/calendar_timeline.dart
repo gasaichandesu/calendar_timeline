@@ -36,6 +36,10 @@ class CalendarTimeline extends StatefulWidget {
   /// It defaults to false
   final bool showYears;
 
+  final bool showMonths;
+
+  final double scale;
+
   CalendarTimeline({
     Key? key,
     required this.initialDate,
@@ -52,7 +56,9 @@ class CalendarTimeline extends StatefulWidget {
     this.dotsColor,
     this.dayNameColor,
     this.locale,
+    this.showMonths = true,
     this.showYears = false,
+    this.scale = 1.0,
   })  : assert(
           initialDate.difference(firstDate).inDays >= 0,
           'initialDate must be on or after firstDate',
@@ -125,7 +131,7 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         if (widget.showYears) _buildYearList(),
-        _buildMonthList(),
+        if (widget.showMonths) _buildMonthList(),
         _buildDayList(),
       ],
     );
@@ -136,7 +142,7 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
   /// the days show will be the available
   SizedBox _buildDayList() {
     return SizedBox(
-      height: 75,
+      height: 75 * widget.scale,
       child: ScrollablePositionedList.builder(
         itemScrollController: _controllerDay,
         initialScrollIndex: _daySelectedIndex ?? 0,
@@ -169,6 +175,7 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
                 activeDayColor: widget.activeDayColor,
                 activeDayBackgroundColor: widget.activeBackgroundDayColor,
                 dotsColor: widget.dotsColor,
+                scale: widget.scale,
               ),
               if (index == _days.length - 1)
                 SizedBox(
@@ -187,7 +194,7 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
   /// months in the calendar and the small version of [YearItem] for each year in between
   Widget _buildMonthList() {
     return Container(
-      height: 40,
+      height: 40 * widget.scale,
       child: ScrollablePositionedList.builder(
         initialScrollIndex: _monthSelectedIndex ?? 0,
         initialAlignment: _scrollAlignment,
@@ -222,6 +229,7 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
                   name: monthName,
                   onTap: () => _goToActualMonth(index),
                   color: widget.monthColor,
+                  scale: widget.scale,
                 ),
                 if (index == _months.length - 1)
                   SizedBox(
