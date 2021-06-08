@@ -21,6 +21,7 @@ class CalendarTimeline extends StatefulWidget {
   final DateTime lastDate;
   final SelectableDayPredicate? selectableDayPredicate;
   final SelectableDayPredicate? dayWithEventsPredicate;
+  final SelectableDayPredicate? dayActivePredicate;
 
   final OnDateSelected onDateSelected;
   final double leftMargin;
@@ -48,6 +49,7 @@ class CalendarTimeline extends StatefulWidget {
     required this.onDateSelected,
     this.selectableDayPredicate,
     this.dayWithEventsPredicate,
+    this.dayActivePredicate,
     this.leftMargin = 0,
     this.dayColor,
     this.activeDayColor,
@@ -157,7 +159,9 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
           return Row(
             children: <Widget>[
               DayItem(
-                isSelected: _daySelectedIndex == index,
+                isSelected: widget.dayActivePredicate == null
+                    ? _daySelectedIndex == index
+                    : widget.dayActivePredicate!(currentDay),
                 dayNumber: currentDay.day,
                 shortName: shortName.length > 3
                     ? shortName.substring(0, 3)
