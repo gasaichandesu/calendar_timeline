@@ -14,6 +14,7 @@ class DayItem extends StatelessWidget {
   final bool available;
   final Color? dotsColor;
   final Color? dayNameColor;
+  final double? dayBorderRadius;
 
   final double scale;
 
@@ -35,6 +36,7 @@ class DayItem extends StatelessWidget {
     this.dotsColor,
     this.dayNameColor,
     this.scale = 1.0,
+    this.dayBorderRadius,
   })  : height = 70.0 * scale,
         width = 60.0 * scale,
         super(key: key);
@@ -63,7 +65,7 @@ class DayItem extends StatelessWidget {
             ? BoxDecoration(
                 color:
                     activeDayBackgroundColor ?? Theme.of(context).accentColor,
-                borderRadius: BorderRadius.circular(12.0),
+                borderRadius: BorderRadius.circular(dayBorderRadius ?? 12.0),
               )
             : BoxDecoration(color: Colors.transparent),
         height: height,
@@ -71,9 +73,9 @@ class DayItem extends StatelessWidget {
         child: Column(
           children: <Widget>[
             if (isSelected)
-              SizedBox(height: 14.0 * scale)
+              SizedBox(height: 13.0 * scale)
             else
-              SizedBox(height: 7.0 * scale),
+              SizedBox(height: 6.0 * scale),
             Text(
               dayNumber.toString(),
               style: isSelected ? selectedStyle : textStyle,
