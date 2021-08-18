@@ -92,7 +92,7 @@ class DayItem extends StatelessWidget {
                 fontSize: 14 * scale,
               ),
             ),
-            SizedBox(height: 4.0 * scale),
+            if (hasEvents && !isDimmed) SizedBox(height: 4.0 * scale),
             if (hasEvents && !isDimmed) _buildDot(),
           ],
         ),
