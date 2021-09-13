@@ -106,7 +106,7 @@ packages:
       name: scrollable_positioned_list
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.0-nullsafety.0"
+    version: "0.1.10"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -170,4 +170,4 @@ packages:
     version: "2.1.0"
 sdks:
   dart: ">=2.12.0 <3.0.0"
-  flutter: ">=1.13.8"
+  flutter: ">=1.12.13+hotfix.5"
