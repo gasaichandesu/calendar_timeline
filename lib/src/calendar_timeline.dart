@@ -52,7 +52,7 @@ class CalendarTimeline extends StatefulWidget {
     this.dayWithEventsPredicate,
     this.dayActivePredicate,
     this.leftMargin = 10,
-    this.offset = 10,
+    this.offset = 20,
     this.dayColor,
     this.activeDayColor,
     this.activeBackgroundDayColor,
