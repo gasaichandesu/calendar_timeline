@@ -25,6 +25,7 @@ class CalendarTimeline extends StatefulWidget {
 
   final OnDateSelected onDateSelected;
   final double leftMargin;
+  final double offset;
   final Color? dayColor;
   final Color? activeDayColor;
   final Color? activeBackgroundDayColor;
@@ -50,7 +51,8 @@ class CalendarTimeline extends StatefulWidget {
     this.selectableDayPredicate,
     this.dayWithEventsPredicate,
     this.dayActivePredicate,
-    this.leftMargin = 0,
+    this.leftMargin = 10,
+    this.offset = 10,
     this.dayColor,
     this.activeDayColor,
     this.activeBackgroundDayColor,
@@ -110,7 +112,7 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
   void initState() {
     super.initState();
     _initCalendar();
-    _scrollAlignment = widget.leftMargin / 440;
+    _scrollAlignment = widget.offset / 440;
     SchedulerBinding.instance!.addPostFrameCallback((_) {
       initializeDateFormatting(_locale);
     });
@@ -142,51 +144,49 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
   /// Creates the row with the day of the [selectedDate.month]. If the
   /// [selectedDate.year] && [selectedDate.month] is the [widget.firstDate] or [widget.lastDate]
   /// the days show will be the available
-  SizedBox _buildDayList() {
-    return SizedBox(
+  Widget _buildDayList() {
+    return Container(
       height: 75 * widget.scale,
-      child: ScrollablePositionedList.builder(
+      child: ScrollablePositionedList.separated(
         itemScrollController: _controllerDay,
         initialScrollIndex: _daySelectedIndex ?? 0,
         initialAlignment: _scrollAlignment,
         scrollDirection: Axis.horizontal,
         itemCount: _days.length,
-        padding: EdgeInsets.only(left: widget.leftMargin, right: 10),
+        padding: EdgeInsets.only(
+          left: widget.offset,
+          right: widget.offset,
+        ),
+        separatorBuilder: (context, index) =>
+            Divider(indent: widget.offset / 5),
         itemBuilder: (BuildContext context, int index) {
           final currentDay = _days[index];
           final shortName =
               DateFormat.E(_locale).format(currentDay).capitalize();
-          return Row(
-            children: <Widget>[
-              DayItem(
-                isSelected: widget.dayActivePredicate == null
-                    ? _daySelectedIndex == index
-                    : widget.dayActivePredicate!(currentDay),
-                dayNumber: currentDay.day,
-                shortName: shortName.length > 3
-                    ? shortName.substring(0, 3)
-                    : shortName,
-                onTap: () => _goToActualDay(index),
-                isDimmed: currentDay
-                    .isBefore(DateTime.now().subtract(Duration(days: 1))),
-                available: widget.selectableDayPredicate == null
-                    ? true
-                    : widget.selectableDayPredicate!(currentDay),
-                hasEvents: widget.dayWithEventsPredicate == null
-                    ? false
-                    : widget.dayWithEventsPredicate!(currentDay),
-                dayColor: widget.dayColor,
-                activeDayColor: widget.activeDayColor,
-                activeDayBackgroundColor: widget.activeBackgroundDayColor,
-                dotsColor: widget.dotsColor,
-                scale: widget.scale,
-              ),
-              if (index == _days.length - 1)
-                SizedBox(
-                    width: MediaQuery.of(context).size.width -
-                        widget.leftMargin -
-                        65)
-            ],
+
+          return Container(
+            child: DayItem(
+              isSelected: widget.dayActivePredicate == null
+                  ? _daySelectedIndex == index
+                  : widget.dayActivePredicate!(currentDay),
+              dayNumber: currentDay.day,
+              shortName:
+                  shortName.length > 3 ? shortName.substring(0, 3) : shortName,
+              onTap: () => _goToActualDay(index),
+              isDimmed: currentDay
+                  .isBefore(DateTime.now().subtract(Duration(days: 1))),
+              available: widget.selectableDayPredicate == null
+                  ? true
+                  : widget.selectableDayPredicate!(currentDay),
+              hasEvents: widget.dayWithEventsPredicate == null
+                  ? false
+                  : widget.dayWithEventsPredicate!(currentDay),
+              dayColor: widget.dayColor,
+              activeDayColor: widget.activeDayColor,
+              activeDayBackgroundColor: widget.activeBackgroundDayColor,
+              dotsColor: widget.dotsColor,
+              scale: widget.scale,
+            ),
           );
         },
       ),
@@ -199,19 +199,22 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
   Widget _buildMonthList() {
     return Container(
       height: 40 * widget.scale,
-      child: ScrollablePositionedList.builder(
+      child: ScrollablePositionedList.separated(
         initialScrollIndex: _monthSelectedIndex ?? 0,
         initialAlignment: _scrollAlignment,
         itemScrollController: _controllerMonth,
-        padding: EdgeInsets.only(left: widget.leftMargin),
+        padding: EdgeInsets.only(
+          left: widget.offset,
+          right: widget.offset,
+        ),
         scrollDirection: Axis.horizontal,
         itemCount: _months.length,
+        separatorBuilder: (_, __) => Divider(indent: widget.offset),
         itemBuilder: (BuildContext context, int index) {
           final currentDate = _months[index];
           final monthName = DateFormat.MMMM(_locale).format(currentDate);
 
-          return Padding(
-            padding: const EdgeInsets.only(right: 12.0, left: 4.0),
+          return Container(
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -235,12 +238,6 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
                   color: widget.monthColor,
                   scale: widget.scale,
                 ),
-                if (index == _months.length - 1)
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width -
-                        widget.leftMargin -
-                        (monthName.length * 10),
-                  )
               ],
             ),
           );
@@ -254,19 +251,22 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
   Widget _buildYearList() {
     return Container(
       height: 40,
-      child: ScrollablePositionedList.builder(
+      child: ScrollablePositionedList.separated(
         initialScrollIndex: _yearSelectedIndex!,
         initialAlignment: _scrollAlignment,
         itemScrollController: _controllerYear,
-        padding: EdgeInsets.only(left: widget.leftMargin),
+        padding: EdgeInsets.only(
+          left: widget.offset,
+          right: widget.offset,
+        ),
         scrollDirection: Axis.horizontal,
         itemCount: _years.length,
+        separatorBuilder: (_, __) => Divider(indent: widget.offset),
         itemBuilder: (BuildContext context, int index) {
           final currentDate = _years[index];
           final yearName = DateFormat.y(_locale).format(currentDate);
 
-          return Padding(
-            padding: const EdgeInsets.only(right: 12.0, left: 4.0),
+          return Container(
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -279,12 +279,12 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
                   color: widget.monthColor,
                   small: false,
                 ),
-                if (index == _years.length - 1)
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width -
-                        widget.leftMargin -
-                        (yearName.length * 10),
-                  )
+                // if (index == _years.length - 1)
+                //   SizedBox(
+                //     width: MediaQuery.of(context).size.width -
+                //         widget.leftMargin -
+                //         (yearName.length * 10),
+                //   )
               ],
             ),
           );
@@ -400,12 +400,12 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
   }
 
   void _moveToDayIndex(int index) {
-    _controllerDay.scrollTo(
-      index: index,
-      alignment: _scrollAlignment,
-      duration: Duration(milliseconds: 500),
-      curve: Curves.easeIn,
-    );
+    // _controllerDay.scrollTo(
+    //   index: index,
+    //   alignment: _scrollAlignment,
+    //   duration: Duration(milliseconds: 500),
+    //   curve: Curves.easeIn,
+    // );
   }
 
   selectedYear() {

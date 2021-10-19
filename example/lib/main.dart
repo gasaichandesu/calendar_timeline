@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                   _selectedDate = date;
                 });
               },
-              leftMargin: 20,
+              offset: 20,
               monthColor: Colors.white70,
               dayColor: Colors.teal[200],
               dayNameColor: Color(0xFF333A47),
