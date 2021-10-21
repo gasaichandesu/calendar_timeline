@@ -367,12 +367,12 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
   }
 
   void _moveToYearIndex(int index) {
-    _controllerYear.scrollTo(
-      index: index,
-      alignment: _scrollAlignment,
-      duration: Duration(milliseconds: 500),
-      curve: Curves.easeIn,
-    );
+    // _controllerYear.scrollTo(
+    //   index: index,
+    //   alignment: _scrollAlignment,
+    //   duration: Duration(milliseconds: 500),
+    //   curve: Curves.easeIn,
+    // );
   }
 
   _goToActualMonth(int index) {
@@ -383,12 +383,12 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
   }
 
   void _moveToMonthIndex(int index) {
-    _controllerMonth.scrollTo(
-      index: index,
-      alignment: _scrollAlignment,
-      duration: Duration(milliseconds: 500),
-      curve: Curves.easeIn,
-    );
+    // _controllerMonth.scrollTo(
+    //   index: index,
+    //   alignment: _scrollAlignment,
+    //   duration: Duration(milliseconds: 500),
+    //   curve: Curves.easeIn,
+    // );
   }
 
   _goToActualDay(int index) {
