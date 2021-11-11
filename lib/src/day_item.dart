@@ -35,7 +35,7 @@ class DayItem extends StatelessWidget {
     this.activeDayColor,
     this.activeDayBackgroundColor,
     this.dayBorderRadius,
-  })  : height = 70.0 * scale,
+  })  : height = 75.0 * scale,
         width = 60.0 * scale,
         super(key: key);
 
