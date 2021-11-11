@@ -2,7 +2,7 @@ name: calendar_timeline
 description: A horizontal date picker that takes up little screen space, so we
   can always have it visible, and that facilitates use with one hand.
 homepage: https://github.com/gasaichandesu/calendar_timeline
-version: 2.0.0
+version: 2.0.1
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
