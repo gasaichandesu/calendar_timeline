@@ -35,7 +35,7 @@ class DayItem extends StatelessWidget {
     this.activeDayColor,
     this.activeDayBackgroundColor,
     this.dayBorderRadius,
-  })  : height = 75.0 * scale,
+  })  : height = 70.0 * scale,
         width = 60.0 * scale,
         super(key: key);
 
@@ -43,17 +43,18 @@ class DayItem extends StatelessWidget {
   ///? Now if the user click close to the number but not straight on top it will still select the date. (ONLY INFORMATION - ERASE)
   _buildDay(BuildContext context) {
     final textStyle = TextStyle(
-        color: available && !isDimmed
-            ? dayColor ?? Theme.of(context).accentColor
-            : dayColor?.withOpacity(0.5) ??
-                Theme.of(context).accentColor.withOpacity(0.5),
-        fontSize: 32 * scale,
-        fontWeight: FontWeight.normal);
+      color: available && !isDimmed
+          ? dayColor ?? Theme.of(context).accentColor
+          : dayColor?.withOpacity(0.5) ??
+              Theme.of(context).accentColor.withOpacity(0.5),
+      fontWeight: FontWeight.normal,
+      fontSize: 32 * scale,
+    );
 
     final selectedStyle = TextStyle(
       color: activeDayColor ?? Colors.white,
+      fontWeight: FontWeight.w600,
       fontSize: 32 * scale,
-      fontWeight: FontWeight.bold,
       height: 0.8,
     );
 
@@ -70,27 +71,38 @@ class DayItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(dayBorderRadius ?? 12.0),
               )
             : BoxDecoration(color: Colors.transparent),
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: (isSelected ? 13.0 : 6.0) * scale),
-            Text(
-              dayNumber.toString(),
-              style: isSelected ? selectedStyle : textStyle,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Column(
+              children: [
+                SizedBox(height: (isSelected ? 13.0 : 6.0) * scale),
+                Text(
+                  dayNumber.toString(),
+                  style: isSelected ? selectedStyle : textStyle,
+                ),
+                Text(
+                  shortName,
+                  style: TextStyle(
+                    fontSize: 14 * scale,
+                    fontWeight: FontWeight.w500,
+                    color: isDimmed || !available
+                        ? (dayNameColor == null
+                            ? Colors.white.withOpacity(0.5)
+                            : dayNameColor!.withOpacity(0.5))
+                        : dayNameColor ?? Colors.white,
+                  ),
+                ),
+              ],
             ),
-            Text(
-              shortName,
-              style: TextStyle(
-                fontSize: 14 * scale,
-                fontWeight: FontWeight.w500,
-                color: isDimmed || !available
-                    ? (dayNameColor == null
-                        ? Colors.white.withOpacity(0.5)
-                        : dayNameColor!.withOpacity(0.5))
-                    : dayNameColor ?? Colors.white,
+            if (hasEvents && !isDimmed)
+              Positioned.fill(
+                bottom: 5,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: _buildDot(),
+                ),
               ),
-            ),
-            if (hasEvents && !isDimmed) SizedBox(height: 4.0 * scale),
-            if (hasEvents && !isDimmed) _buildDot(),
           ],
         ),
       ),

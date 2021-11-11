@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
             dayNameColor: Color(0xFF333A47),
             activeDayColor: Colors.white,
             activeBackgroundDayColor: Colors.redAccent[100],
-            dotsColor: Color(0xFF333A47),
+            dotsColor: Colors.white,
             // selectableDayPredicate: (date) => date.day != 23,
             locale: 'en',
           ),
