@@ -51,60 +51,77 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF333A47),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                'Calendar Timeline',
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6
-                    .copyWith(color: Colors.tealAccent[100]),
-              ),
-            ),
-            CalendarTimeline(
-              scale: 0.8,
-              showYears: false,
-              dayWithEventsPredicate: (date) => DateTime.now().isAfter(date),
-              initialDate: _selectedDate,
-              firstDate: DateTime.now().subtract(Duration(days: 10)),
-              lastDate: DateTime.now().add(Duration(days: 365)),
-              onDateSelected: (date) {
-                setState(() {
-                  _selectedDate = date;
-                });
-              },
-              offset: 20,
-              monthColor: Colors.white70,
-              dayColor: Colors.teal[200],
-              dayNameColor: Color(0xFF333A47),
-              activeDayColor: Colors.white,
-              activeBackgroundDayColor: Colors.redAccent[100],
-              dotsColor: Color(0xFF333A47),
-              selectableDayPredicate: (date) => date.day != 23,
-              locale: 'en',
-            ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: TextButton(
-                style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.teal[200])),
-                child:
-                    Text('RESET', style: TextStyle(color: Color(0xFF333A47))),
-                onPressed: () => setState(() => _resetSelectedDate()),
-              ),
-            ),
-            SizedBox(height: 20),
-            Center(
-                child: Text('Selected date is $_selectedDate',
-                    style: TextStyle(color: Colors.white)))
-          ],
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        brightness: Brightness.dark,
+        backgroundColor: Color(0xFF333A47),
+        title: Text(
+          'SELECTED DATE: $_selectedDate',
+          style: TextStyle(fontSize: 16),
         ),
+      ),
+      body: Column(
+        children: [
+          CalendarTimeline(
+            scale: 0.8,
+            // showYears: false,
+            dayWithEventsPredicate: (date) => DateTime.now().isAfter(date),
+            initialDate: _selectedDate,
+            firstDate: DateTime.now().subtract(Duration(days: 10)),
+            lastDate: DateTime.now().add(Duration(days: 365)),
+            onDateSelected: (date) {
+              setState(() {
+                _selectedDate = date;
+              });
+            },
+            offset: 20,
+            monthColor: Colors.white70,
+            dayColor: Colors.teal[200],
+            dayNameColor: Color(0xFF333A47),
+            activeDayColor: Colors.white,
+            activeBackgroundDayColor: Colors.redAccent[100],
+            dotsColor: Color(0xFF333A47),
+            // selectableDayPredicate: (date) => date.day != 23,
+            locale: 'en',
+          ),
+          Expanded(
+            child: Stack(
+              children: [
+                Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.only(top: 8),
+                  padding: EdgeInsets.only(top: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(16),
+                      topRight: Radius.circular(16),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 20),
+                      TextButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.teal[200]),
+                        ),
+                        child: Text(
+                          'RESET',
+                          style: TextStyle(color: Color(0xFF333A47)),
+                        ),
+                        onPressed: () => setState(
+                          () => _resetSelectedDate(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

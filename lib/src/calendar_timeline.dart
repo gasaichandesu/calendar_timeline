@@ -146,7 +146,7 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
   /// the days show will be the available
   Widget _buildDayList() {
     return Container(
-      height: 75 * widget.scale,
+      height: 80 * widget.scale,
       child: ScrollablePositionedList.separated(
         itemScrollController: _controllerDay,
         initialScrollIndex: _daySelectedIndex ?? 0,
