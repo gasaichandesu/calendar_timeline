@@ -54,7 +54,7 @@ class DayItem extends StatelessWidget {
       color: activeDayColor ?? Colors.white,
       fontSize: 32 * scale,
       fontWeight: FontWeight.bold,
-      height: 0.8,
+      // height: 0.8,
     );
 
     return GestureDetector(
@@ -72,7 +72,7 @@ class DayItem extends StatelessWidget {
             : BoxDecoration(color: Colors.transparent),
         child: Column(
           children: <Widget>[
-            SizedBox(height: (isSelected ? 13.0 : 6.0) * scale),
+            SizedBox(height: dayBorderRadius ?? 12.0 / 2.5),
             Text(
               dayNumber.toString(),
               style: isSelected ? selectedStyle : textStyle,
