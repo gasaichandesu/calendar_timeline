@@ -43,15 +43,18 @@ class DayItem extends StatelessWidget {
   ///? Now if the user click close to the number but not straight on top it will still select the date. (ONLY INFORMATION - ERASE)
   _buildDay(BuildContext context) {
     final textStyle = TextStyle(
-        color: available && !isDimmed
-            ? dayColor ?? Theme.of(context).accentColor
-            : dayColor?.withOpacity(0.5) ??
-                Theme.of(context).accentColor.withOpacity(0.5),
-        fontSize: 32 * scale,
-        fontWeight: FontWeight.normal);
+      color: available && !isDimmed
+          ? dayColor ?? Theme.of(context).accentColor
+          : dayColor?.withOpacity(0.5) ??
+              Theme.of(context).accentColor.withOpacity(0.5),
+      height: 1,
+      fontSize: 32 * scale,
+      fontWeight: FontWeight.normal,
+    );
 
     final selectedStyle = TextStyle(
       color: activeDayColor ?? Colors.white,
+      height: 1,
       fontSize: 32 * scale,
       fontWeight: FontWeight.bold,
     );
@@ -71,7 +74,7 @@ class DayItem extends StatelessWidget {
             : BoxDecoration(color: Colors.transparent),
         child: Column(
           children: <Widget>[
-            SizedBox(height: (6.0) * scale),
+            SizedBox(height: 13.0 * scale),
             Text(
               dayNumber.toString(),
               style: isSelected ? selectedStyle : textStyle,
@@ -80,6 +83,7 @@ class DayItem extends StatelessWidget {
               shortName,
               style: TextStyle(
                 fontSize: 14 * scale,
+                height: 1,
                 fontWeight: FontWeight.w500,
                 color: isDimmed || !available
                     ? (dayNameColor == null
@@ -88,8 +92,9 @@ class DayItem extends StatelessWidget {
                     : dayNameColor ?? Colors.white,
               ),
             ),
-            if (hasEvents) SizedBox(height: 4.0 * scale),
+            SizedBox(height: 4.0 * scale),
             if (hasEvents) _buildDot(),
+            SizedBox(height: 6.0 * scale),
           ],
         ),
       ),
