@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 /// Creates a Widget to represent the months.
 class MonthItem extends StatelessWidget {
   final String name;
-  final Function onTap;
+  final void Function()? onTap;
   final bool isSelected;
   final Color? color;
 
@@ -12,21 +12,21 @@ class MonthItem extends StatelessWidget {
   MonthItem({
     required this.name,
     required this.onTap,
-    this.isSelected = false,
     this.color,
     this.scale = 1.0,
+    this.isSelected = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: this.onTap as void Function()?,
+      onTap: onTap,
       child: Text(
-        this.name.toUpperCase(),
+        name.toUpperCase(),
         style: TextStyle(
           fontSize: 14 * scale,
           color: color ?? Colors.black87,
-          fontWeight: this.isSelected ? FontWeight.bold : FontWeight.w300,
+          fontWeight: isSelected ? FontWeight.bold : FontWeight.w300,
         ),
       ),
     );
