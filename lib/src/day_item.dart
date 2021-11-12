@@ -8,7 +8,7 @@ class DayItem extends StatelessWidget {
   final bool hasEvents;
   final bool available;
   final bool isSelected;
-  final Function onTap;
+  final void Function()? onTap;
   final Color? dayColor;
   final Color? dotsColor;
   final Color? dayNameColor;
@@ -58,7 +58,7 @@ class DayItem extends StatelessWidget {
     );
 
     return GestureDetector(
-      onTap: available ? onTap as void Function()? : null,
+      onTap: available ? onTap : null,
       child: Container(
         width: width,
         height: height,

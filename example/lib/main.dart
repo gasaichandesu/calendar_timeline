@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
           CalendarTimeline(
             scale: 0.8,
             // showYears: false,
-            dayWithEventsPredicate: (date) => DateTime.now().isAfter(date),
+            dayWithEventsPredicate: (date) => date.day != 14,
             initialDate: _selectedDate,
             firstDate: DateTime.now().subtract(Duration(days: 10)),
             lastDate: DateTime.now().add(Duration(days: 365)),
