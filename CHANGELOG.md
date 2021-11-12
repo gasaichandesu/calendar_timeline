@@ -1,3 +1,9 @@
+## 2.1.0 - 12/11/2021
+
+* Added default colors
+* Added scale decorator for month & year items
+* Fix bug with event predicate & day item height
+
 ## 1.0.0-null-safety.0 - 19/03/2021
 
 * Migrate to null safety
