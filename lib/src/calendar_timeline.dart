@@ -99,6 +99,12 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
   int? _daySelectedIndex;
   late double _scrollAlignment;
 
+  late Color _dotsColor;
+  late Color _dayColor;
+  late Color _monthColor;
+  late Color _activeDayColor;
+  late Color _activeBackgroundDayColor;
+
   List<DateTime> _years = [];
   List<DateTime> _months = [];
   List<DateTime> _days = [];
@@ -113,9 +119,27 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
     super.initState();
     _initCalendar();
     _scrollAlignment = widget.offset / 440;
+    _dotsColor = widget.dotsColor ?? Colors.white;
+    _dayColor = widget.dayColor ?? Colors.grey;
+    _activeDayColor = widget.activeDayColor ?? Colors.white;
+    _monthColor = widget.monthColor ?? Colors.white70;
+    _activeBackgroundDayColor = widget.activeBackgroundDayColor ?? Colors.blue;
     SchedulerBinding.instance!.addPostFrameCallback((_) {
       initializeDateFormatting(_locale);
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    _dotsColor = widget.dotsColor ?? Theme.of(context).accentColor;
+    _dayColor = widget.dayColor ?? Theme.of(context).scaffoldBackgroundColor;
+    _activeDayColor =
+        widget.activeDayColor ?? Theme.of(context).scaffoldBackgroundColor;
+    _monthColor =
+        widget.monthColor ?? Theme.of(context).scaffoldBackgroundColor;
+    _activeBackgroundDayColor = widget.activeBackgroundDayColor ??
+        Theme.of(context).scaffoldBackgroundColor.withOpacity(0.15);
+    super.didChangeDependencies();
   }
 
   /// Refreshes the calendar when a day, month or year is selected
@@ -181,11 +205,11 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
               hasEvents: widget.dayWithEventsPredicate == null
                   ? false
                   : widget.dayWithEventsPredicate!(currentDay),
-              dayColor: widget.dayColor,
-              activeDayColor: widget.activeDayColor,
-              activeDayBackgroundColor: widget.activeBackgroundDayColor,
-              dotsColor: widget.dotsColor,
               scale: widget.scale,
+              dotsColor: _dotsColor,
+              dayColor: _dayColor,
+              activeDayColor: _activeDayColor,
+              activeDayBackgroundColor: _activeBackgroundDayColor,
             ),
           );
         },
@@ -223,11 +247,12 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
                 if (widget.firstDate.year != currentDate.year &&
                     currentDate.month == 1 &&
                     !widget.showYears)
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10),
+                  Container(
+                    padding: EdgeInsets.only(right: widget.offset),
                     child: YearItem(
                       name: DateFormat.y(_locale).format(currentDate),
-                      color: widget.monthColor,
+                      color: _monthColor,
+                      scale: widget.scale,
                       onTap: () {},
                     ),
                   ),
@@ -235,7 +260,7 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
                   isSelected: _monthSelectedIndex == index,
                   name: monthName,
                   onTap: () => _goToActualMonth(index),
-                  color: widget.monthColor,
+                  color: _monthColor,
                   scale: widget.scale,
                 ),
               ],
@@ -250,7 +275,7 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
   /// [widget.showYears] is set to true. It is false by default
   Widget _buildYearList() {
     return Container(
-      height: 40,
+      height: 40 * widget.scale,
       child: ScrollablePositionedList.separated(
         initialScrollIndex: _yearSelectedIndex!,
         initialAlignment: _scrollAlignment,
@@ -274,9 +299,9 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
               children: <Widget>[
                 YearItem(
                   isSelected: _yearSelectedIndex == index,
-                  name: yearName,
                   onTap: () => _goToActualYear(index),
-                  color: widget.monthColor,
+                  color: _monthColor,
+                  name: yearName,
                   small: false,
                 ),
                 // if (index == _years.length - 1)

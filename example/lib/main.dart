@@ -1,4 +1,5 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -13,7 +14,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        accentColor: Colors.blue,
         primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.white,
+        backgroundColor: Color(0xFF333A47),
       ),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
@@ -50,12 +54,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF333A47),
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
         brightness: Brightness.dark,
-        backgroundColor: Color(0xFF333A47),
+        backgroundColor: Theme.of(context).backgroundColor,
         title: Text(
           'SELECTED DATE: $_selectedDate',
           style: TextStyle(fontSize: 16),
@@ -65,9 +69,11 @@ class _HomePageState extends State<HomePage> {
         children: [
           CalendarTimeline(
             scale: 0.8,
-            // showYears: false,
-            dayWithEventsPredicate: (date) => date.day != 14,
+            offset: 20,
+            locale: 'ru',
             initialDate: _selectedDate,
+            dayWithEventsPredicate: (date) => date.day != 14,
+            // selectableDayPredicate: (date) => date.day != 23,
             firstDate: DateTime.now().subtract(Duration(days: 10)),
             lastDate: DateTime.now().add(Duration(days: 365)),
             onDateSelected: (date) {
@@ -75,15 +81,12 @@ class _HomePageState extends State<HomePage> {
                 _selectedDate = date;
               });
             },
-            offset: 20,
-            monthColor: Colors.white70,
-            dayColor: Colors.teal[200],
-            dayNameColor: Color(0xFF333A47),
-            activeDayColor: Colors.white,
-            activeBackgroundDayColor: Colors.redAccent[100],
-            dotsColor: Colors.white,
-            // selectableDayPredicate: (date) => date.day != 23,
-            locale: 'en',
+            // dotsColor: Colors.white,
+            // monthColor: Colors.white70,
+            // dayColor: Colors.teal[200],
+            // activeDayColor: Colors.white,
+            // dayNameColor: Color(0xFF333A47),
+            // activeBackgroundDayColor: Colors.redAccent[100],
           ),
           Expanded(
             child: Stack(
@@ -102,14 +105,11 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     children: [
                       SizedBox(height: 20),
-                      TextButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.teal[200]),
-                        ),
+                      CupertinoButton(
+                        color: Theme.of(context).backgroundColor,
                         child: Text(
                           'RESET',
-                          style: TextStyle(color: Color(0xFF333A47)),
+                          style: TextStyle(color: Colors.white),
                         ),
                         onPressed: () => setState(
                           () => _resetSelectedDate(),
