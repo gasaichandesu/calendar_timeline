@@ -131,7 +131,7 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
 
   @override
   void didChangeDependencies() {
-    _dotsColor = widget.dotsColor ?? Theme.of(context).accentColor;
+    _dotsColor = widget.dotsColor ?? Theme.of(context).colorScheme.secondary;
     _dayColor = widget.dayColor ?? Theme.of(context).scaffoldBackgroundColor;
     _activeDayColor =
         widget.activeDayColor ?? Theme.of(context).scaffoldBackgroundColor;
